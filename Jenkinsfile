@@ -22,7 +22,7 @@ pipeline {
       steps {
         dir('server') {
           sh """
-            docker build -t ${BACKEND_IMAGE} Dockerfile .
+            docker build -t ${BACKEND_IMAGE} .
           """
         }
       }
