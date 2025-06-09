@@ -35,6 +35,30 @@ pipeline {
         }
       }
     
+ stage('Deploy Containers') {
+   steps {
+    script {
+      // Stop & remove old containers if they exist (optional cleanup)
+      sh '''
+        docker rm -f backend-app || true
+        docker rm -f frontend-app || true
+      '''
+
+      // Run backend container
+      sh '''
+        docker run -d --name backend-app -p 5000:5000 \
+          -e MONGO_URL="mongodb://kritan:kritan@123@host.docker.internal:27017/kritanDb?authSource=admin" \
+          backend-app
+      '''
+
+      // Run frontend container
+      sh '''
+        docker run -d --name frontend-app -p 3000:3000 frontend-app
+      '''
+    }
+  }
+}
+
 
     stage('Deploy to Kubernetes') {
         steps {
