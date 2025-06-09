@@ -13,7 +13,7 @@ pipeline {
     stage('Gitcheckout SCM') {
             steps {
                 // Checkout command
-                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'Chat-app', url: 'https://github.com/UKPA-Software-Limited/email-service.git']])
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'Chat-app', url: 'https://github.com/Kritan58/Chat-app.git']])
                 echo 'Code checkout successful'
             }
         }	
