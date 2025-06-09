@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:6.0
+    container_name: mongo-db
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: kritan
+      MONGO_INITDB_ROOT_PASSWORD: kritan@123
+      MONGO_INITDB_DATABASE: kritanDb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  backend:
+    build:
+      context: ./server
+    container_name: node-backend
+    ports:
+      - "5000:5000"
+    environment:
+      - MONGO_URL=mongodb://kritan:kritan%40123@mongo:27017/kritanDb?authSource=admin
+      - NODE_ENV=production
+      - JWT_SECRET=your_secret_key
+    depends_on:
+      - mongo
+
+  frontend:
+    build:
+      context: ./public
+    container_name: react-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - VITE_BACKEND_URL=http://localhost:5000
+    depends_on:
+      - backend
+
+volumes:
+  mongo_data:
+
