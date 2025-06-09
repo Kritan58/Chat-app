@@ -10,12 +10,13 @@ pipeline {
   }
 
   stages {
-    stage('Checkout') {
-      steps {
-        git 'https://github.com/koolkishan/chat-app-react-nodejs.git'
-        echo '✅ Checkout successful'
-      }
-    }
+    stage('Gitcheckout SCM') {
+            steps {
+                // Checkout command
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'Chat-app', url: 'https://github.com/UKPA-Software-Limited/email-service.git']])
+                echo 'Code checkout successful'
+            }
+        }	
 
     stage('Build & Push Backend Image') {
       steps {
