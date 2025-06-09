@@ -16,17 +16,18 @@ pipeline {
                 checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'Chat-app', url: 'https://github.com/Kritan58/Chat-app.git']])
                 echo 'Code checkout successful'
             }
-        }	
-
-    stage('Build & Push Backend Image') {
-      steps {
-        dir('server') {
-          sh """
-            docker build -t ${BACKEND_IMAGE} .
-          """
         }
+ 
+    stage(Build Backend image') {
+      steps {
+        sh '''
+        docker run -d --name backend-app -p 5000:5000 \
+          -e MONGO_URL="mongodb://kritan:kritan@123@host.docker.internal:27017/kritanDb?authSource=admin" \
+          backend-app
+        '''
       }
     }
+
 
     stage('Build & Push Frontend Image') {
       steps {
