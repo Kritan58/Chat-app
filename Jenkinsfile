@@ -49,7 +49,7 @@ pipeline {
             //kubectl set image deployment/${FRONTEND_DEPLOYMENT} frontend=${FRONTEND_IMAGE} --namespace=default
          // """
         }
-      }//
+      }
     }
   }
-}
+
