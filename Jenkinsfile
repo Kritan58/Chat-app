@@ -39,16 +39,17 @@ pipeline {
     }
 
     stage('Deploy to Kubernetes') {
-      steps {
-        withCredentials([file(credentialsId: "${KUBE_CONFIG_CREDENTIALS_ID}", variable: 'KUBECONFIG')]) {
-          sh """
-            export KUBECONFIG=$KUBECONFIG
+        steps {
+	echo 'Deployed to kubernetes'
+       // withCredentials([file(credentialsId: "${KUBE_CONFIG_CREDENTIALS_ID}", variable: 'KUBECONFIG')]) {
+         // sh """
+           // export KUBECONFIG=$KUBECONFIG
 
-            kubectl set image deployment/${BACKEND_DEPLOYMENT} backend=${BACKEND_IMAGE} --namespace=default
-            kubectl set image deployment/${FRONTEND_DEPLOYMENT} frontend=${FRONTEND_IMAGE} --namespace=default
-          """
+            //kubectl set image deployment/${BACKEND_DEPLOYMENT} backend=${BACKEND_IMAGE} --namespace=default
+            //kubectl set image deployment/${FRONTEND_DEPLOYMENT} frontend=${FRONTEND_IMAGE} --namespace=default
+         // """
         }
-      }
+      }//
     }
   }
 }
