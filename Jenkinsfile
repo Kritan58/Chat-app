@@ -29,13 +29,12 @@ pipeline {
 
     stage('Build & Push Frontend Image') {
       steps {
-        dir('public') {
-          sh """
+          sh '''
             docker build -t ${FRONTEND_IMAGE} -f public/Dockerfile public/
-          """
+          '''
         }
       }
-    }
+    
 
     stage('Deploy to Kubernetes') {
         steps {
