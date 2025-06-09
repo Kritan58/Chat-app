@@ -21,7 +21,7 @@ pipeline {
     stage('Build Backend image') {
       steps {
         sh '''
-        docker build -t ${BACKEND_IMAGE} .
+        docker build -t ${BACKEND_IMAGE} -f server/Dockerfile .
         '''
       }
     }
@@ -31,7 +31,7 @@ pipeline {
       steps {
         dir('public') {
           sh """
-            docker build -t ${FRONTEND_IMAGE} .
+            docker build -t ${FRONTEND_IMAGE} -f public/Dockerfile .
           """
         }
       }
