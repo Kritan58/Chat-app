@@ -21,9 +21,7 @@ pipeline {
     stage('Build Backend image') {
       steps {
         sh '''
-        docker run -d --name backend-app -p 5000:5000 \
-          -e MONGO_URL="mongodb://kritan:kritan@123@host.docker.internal:27017/kritanDb?authSource=admin" \
-          backend-app
+        docker build -t ${BACKEND_IMAGE} .
         '''
       }
     }
