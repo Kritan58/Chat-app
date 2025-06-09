@@ -18,7 +18,7 @@ pipeline {
             }
         }
  
-    stage(Build Backend image') {
+    stage('Build Backend image') {
       steps {
         sh '''
         docker run -d --name backend-app -p 5000:5000 \
