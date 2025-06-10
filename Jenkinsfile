@@ -43,9 +43,9 @@ pipeline {
     stage('Deploy to Kubernetes') {
       steps {
         echo 'Deploying to Kubernetes cluster...'
-        withCredentials([file(credentialsId: "${KUBE_CONFIG_CREDENTIALS_ID}", variable: 'KUBECONFIG_FILE')]) {
+        withCredentials([file(credentialsId: "${KUBE_CONFIG_CREDENTIALS_ID}", variable: 'KUBECONFIG')]) {
           sh '''
-            export KUBECONFIG=$KUBECONFIG_FILE
+            export KUBECONFIG=$KUBECONFIG
 
             kubectl apply -f k8s/backend-deployment.yaml
             kubectl apply -f k8s/frontend-deployment.yaml
