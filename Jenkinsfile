@@ -47,8 +47,10 @@ pipeline {
       // Run backend container
       sh '''
         docker run -d --name backend-app -p 5000:5000 \
-          -e MONGO_URL="mongodb://kritan:kritan@123@host.docker.internal:27017/kritanDb?authSource=admin" \
-          backend-app
+  -e PORT=5000 \
+  -e MONGO_URL="mongodb://kritan:kritan@123@host.docker.internal:27017/kritanDb?authSource=admin" \
+  backend-app
+
       '''
 
       // Run frontend container
@@ -61,17 +63,24 @@ pipeline {
 
 
     stage('Deploy to Kubernetes') {
-        steps {
-	echo 'Deployed to kubernetes'
-       // withCredentials([file(credentialsId: "${KUBE_CONFIG_CREDENTIALS_ID}", variable: 'KUBECONFIG')]) {
-         // sh """
-           // export KUBECONFIG=$KUBECONFIG
+  steps {
+    echo 'Deploying to Kubernetes cluster...'
 
-            //kubectl set image deployment/${BACKEND_DEPLOYMENT} backend=${BACKEND_IMAGE} --namespace=default
-            //kubectl set image deployment/${FRONTEND_DEPLOYMENT} frontend=${FRONTEND_IMAGE} --namespace=default
-         // """
-        }
-      }
+    // Apply Kubernetes manifests (you need these YAML files prepared)
+    sh '''
+    kubectl apply -f k8s/backend-deployment.yaml
+    kubectl apply -f k8s/frontend-deployment.yaml
+    '''
+
+    // Set the image if you're rebuilding with new tags
+    // Assuming `backend-app:latest` and `frontend-app:latest` are rebuilt locally
+    sh '''
+    kubectl set image deployment/${BACKEND_DEPLOYMENT} backend=${BACKEND_IMAGE}:latest --namespace=default
+    kubectl set image deployment/${FRONTEND_DEPLOYMENT} frontend=${FRONTEND_IMAGE}:latest --namespace=default
+    '''
+  }
+}
+
     }
   }
 
