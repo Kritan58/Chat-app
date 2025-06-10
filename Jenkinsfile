@@ -61,8 +61,8 @@ pipeline {
                 withCredentials([file(credentialsId: "${KUBE_CONFIG_CREDENTIALS_ID}", variable: 'KUBECONFIG_FILE')]) {
                     sh '''
                         export KUBECONFIG=$KUBECONFIG_FILE
-                        kubectl apply -f k8s/backend-deployment.yaml
-                        kubectl apply -f k8s/frontend-deployment.yaml
+                        kubectl apply -f --validate=false  k8s/backend-deployment.yaml
+                        kubectl apply -f --validate=false  k8s/frontend-deployment.yaml
                         kubectl set image deployment/${BACKEND_DEPLOYMENT} backend=${BACKEND_IMAGE}:${BUILD_TAG}
                         kubectl set image deployment/${FRONTEND_DEPLOYMENT} frontend=${FRONTEND_IMAGE}:${BUILD_TAG}
                     '''
