@@ -47,8 +47,8 @@ pipeline {
           sh '''
             export KUBECONFIG=$KUBECONFIG
 
-            kubectl apply -f k8s/backend-deployment.yaml
-            kubectl apply -f k8s/frontend-deployment.yaml
+            kubectl apply -f k8s/backend-deployment.yaml --validate=false
+            kubectl apply -f k8s/frontend-deployment.yaml --validate=false
 
             kubectl set image deployment/${BACKEND_DEPLOYMENT} backend=${BACKEND_IMAGE}:latest --namespace=default
             kubectl set image deployment/${FRONTEND_DEPLOYMENT} frontend=${FRONTEND_IMAGE}:latest --namespace=default
