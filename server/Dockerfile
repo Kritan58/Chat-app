@@ -1,12 +1,12 @@
 # Use a lightweight Node.js image
-FROM node:16
+FROM node:18-alpine
 
 # Create app directory
 WORKDIR /app
 
 # Install app dependencies
 COPY package*.json ./
-RUN npm install
+RUN yarn install --verbose
 
 # Bundle app source
 COPY . .
