@@ -6,7 +6,8 @@ WORKDIR /app
 
 # Install app dependencies
 COPY package*.json ./
-RUN npm install
+npm install --verbose --legacy-peer-deps --no-optional
+
 
 # Bundle app source
 COPY . .
