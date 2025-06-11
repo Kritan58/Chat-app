@@ -6,7 +6,7 @@ WORKDIR /app
 
 # Install app dependencies
 COPY package*.json ./
-RUN yarn install --verbose
+RUN npm install
 
 # Bundle app source
 COPY . .
@@ -15,5 +15,5 @@ COPY . .
 EXPOSE 5000
 
 # Start the server
-CMD ["yarn", "start"]
+CMD ["npm", "start"]
 
