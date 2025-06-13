@@ -17,9 +17,6 @@ spec:
           image: backend-app:latest
           ports:
             - containerPort: 5000
-          env:
-            - name: MONGO_URL
-              value: "mongodb://kritan:kritan@123@mongo-service:27017/kritanDb?authSource=admin"
 ---
 apiVersion: v1
 kind: Service
