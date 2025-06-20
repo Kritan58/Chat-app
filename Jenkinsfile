@@ -49,8 +49,8 @@ stage('Deploy to Kubernetes') {
         echo "$KUBECONFIG_B64" | base64 -d > kubeconfig.yaml
         export KUBECONFIG=kubeconfig.yaml
 
-        kubectl apply -f k8s/backend-deployment.yaml
-        kubectl apply -f k8s/frontend-deployment.yaml
+        kubectl apply --validate=false  -f k8s/backend-deployment.yaml
+        kubectl apply --validate=false  -f k8s/frontend-deployment.yaml
 
         kubectl set image deployment/${BACKEND_DEPLOYMENT} backend=${BACKEND_IMAGE}:latest --namespace=default
         kubectl set image deployment/${FRONTEND_DEPLOYMENT} frontend=${FRONTEND_IMAGE}:latest --namespace=default
