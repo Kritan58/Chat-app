@@ -1,5 +1,5 @@
 pipeline {
-  agent { label 'windows' }
+  agent { label 'Windows' }
 
   environment {
     BACKEND_IMAGE = "backend-app"
